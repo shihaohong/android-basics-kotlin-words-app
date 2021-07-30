@@ -15,6 +15,7 @@
  */
 package com.example.wordsapp
 
+import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -62,6 +63,20 @@ class LetterAdapter :
     override fun onBindViewHolder(holder: LetterViewHolder, position: Int) {
         val item = list.get(position)
         holder.button.text = item.toString()
+        holder.button.setOnClickListener {
+            val context = holder.view.context
+            // A `DetailActivity` ojbect is created behind the scenes here
+            val intent = Intent(context, DetailActivity::class.java)
+
+            // A piece of data (like a number of strong) that will be provided later
+            // In this case, the DetailActivity will need to know what letter to represent.
+            // `toString()` here is necessary because it's a `CharSequence`, which is, in
+            // reality, a Kotlin interface. (aka, it's more generic than a String)
+            intent.putExtra("letter", holder.button.text.toString())
+
+            // This basically starts a new activity that was defined in the above `Intent`
+            context.startActivity(intent)
+        }
     }
 
     // Setup custom accessibility delegate to set the text read with

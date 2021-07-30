@@ -23,6 +23,11 @@ import com.example.wordsapp.databinding.ActivityDetailBinding
 
 
 class DetailActivity : AppCompatActivity() {
+    // What's a `companion`?
+    companion object {
+        val LETTER = "letter"
+        val SEARCH_PREFIX = "https://www.google.com/search?q="
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +38,13 @@ class DetailActivity : AppCompatActivity() {
         val binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Retrieve the LETTER from the Intent extras
-        // intent.extras.getString returns String? (String or null)
-        // so toString() guarantees that the value will be a String
-        val letterId = "A"
+        // - `intent` here is property of any intent.
+        // - It is passed from the activity that creates this one.
+        // `extras` here basically is any additional data passed along
+        // - If the activity wasn't launched from an intent, the `intent` property might not
+        // be an `Intent` (WHAT?!)
+        // - The final `.toString()` call is to ensure a String value and not null
+        val letterId = intent?.extras?.getString("letter").toString()
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
